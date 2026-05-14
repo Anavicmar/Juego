@@ -1,105 +1,245 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Jugador Bingo</title>
+  <meta charset="UTF-8">
+  <title>Cartón Baby Shower</title>
   <style>
-    body { text-align:center; font-family:Arial; }
+    :root {
+      --bg: #fff1f7;
+      --card: rgba(255,255,255,0.95);
+      --border: rgba(236, 148, 177, 0.45);
+      --text: #653d3f;
+      --accent: #cd5173;
+      --cell: #fff6f7;
+      --cell-border: rgba(232, 167, 191, 0.45);
+      --free: #f9d4df;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: radial-gradient(circle at top left, #ffe7f0 0%, #ffeef7 35%, #fff9fc 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 28px 18px 32px;
+    }
+
+    .page {
+      width: min(1000px, 100%);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      letter-spacing: -0.04em;
+      color: #6a3f44;
+    }
+
+    .header .subtitle {
+      margin: 16px auto 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: #ffd9e5;
+      color: #8e4b5f;
+      font-weight: 700;
+      box-shadow: 0 12px 24px rgba(215, 146, 169, 0.15);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 30px;
+      box-shadow: 0 32px 60px rgba(205, 142, 161, 0.16);
+    }
+
     .grid {
-      display:grid;
-      grid-template-columns: repeat(5,80px);
-      gap:5px;
-      justify-content:center;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
     }
+
     .cell {
-      border:1px solid #ccc;
-      padding:10px;
-      cursor:pointer;
+      background: var(--cell);
+      border: 1px solid var(--cell-border);
+      border-radius: 22px;
+      min-height: 96px;
+      padding: 14px 10px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #6b4147;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.8);
     }
-    .marked { background:pink; }
+
+    .cell:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(206, 145, 168, 0.18);
+    }
+
+    .cell.marked {
+      background: #fcd5de;
+      border-color: rgba(205, 81, 115, 0.45);
+      color: #8b3f58;
+    }
+
+    .cell.free {
+      background: var(--free);
+      color: #a53d57;
+      border-color: rgba(205, 81, 115, 0.35);
+      font-size: 1.6rem;
+      cursor: default;
+    }
+
+    .button-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 22px;
+    }
+
     button {
-      margin-top:20px;
-      padding:10px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f38fa4 0%, #f5b4cd 100%);
+      color: #743848;
+      font-weight: 700;
+      padding: 14px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 16px 32px rgba(217, 143, 166, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 30px rgba(217, 143, 166, 0.28);
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        gap: 10px;
+      }
+
+      .cell {
+        min-height: 80px;
+        padding: 12px 8px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .header .subtitle {
+        width: fit-content;
+        font-size: 0.95rem;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="page">
+    <header class="header">
+      <h1>Tu cartón</h1>
+      <div class="subtitle">¡Baby Shower Bingo!</div>
+    </header>
 
-<h2>👶 Tu cartón</h2>
-<div class="grid" id="grid"></div>
+    <section class="card">
+      <div class="grid" id="grid"></div>
+      <div class="button-wrap">
+        <button onclick="verificar()">Cantar BINGO</button>
+      </div>
+    </section>
+  </div>
 
-<button onclick="verificar()">Cantar BINGO</button>
+  <script>
+    const palabras = [
+      "Pañal","Biberón","Chupete","Coche","Cuna","Mamadera",
+      "Babero","Toallitas","Juguete","Pijama","Sonajero",
+      "Manta","Leche","Dormir","Llanto","Paseo",
+      "Gatear","Carriola","Termómetro","Bañera",
+      "Crema","Talco","Ropita","Calcetines","Cambiar",
+      "Gateo","Sonrisa","Cuento","Peluche","Móvil","Mecer",
+      "Arrullo","Frazada","Tetero","Cochecito","Guardería",
+      "Primeros pasos","Dientes","Risa","Abrazos","Cariño",
+      "Chiquito","Familia","Cuidado","Nama","Bebé",
+      "Ternura","Alegría","Duermes","Llora","Arrullos",
+      "Papilla","Comida","Agüita","Jabón","Baño",
+      "Sueño","Descanso","Balancín","Luces","Música"
+    ];
 
-<script>
-const palabras = [
-"Pañal","Biberón","Chupete","Coche","Cuna","Mamadera",
-"Babero","Toallitas","Juguete","Pijama","Sonajero",
-"Manta","Leche","Dormir","Llanto","Paseo",
-"Gatear","Carriola","Termómetro","Bañera",
-"Crema","Talco","Ropita","Calcetines","Cambiar",
+    let carton = [];
+    let marcados = ["FREE"];
 
-"Gateo","Sonrisa","Cuento","Peluche","Móvil","Mecer",
-"Arrullo","Frazada","Tetero","Cochecito","Guardería",
-"Primeros pasos","Dientes","Risa","Abrazos","Cariño",
-"Chiquito","Familia","Cuidado","Nama","Bebé",
-"Ternura","Alegría","Duermes","Llora","Arrullos",
-"Papilla","Comida","Agüita","Jabón","Baño",
-"Sueño","Descanso","Balancín","Luces","Música"
-];
+    function generar() {
+      carton = [...palabras].sort(() => 0.5 - Math.random()).slice(0, 25);
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
 
-let carton = [];
-let marcados = [];
+      carton.forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "cell";
 
-function generar() {
-  carton = [...palabras].sort(()=>0.5-Math.random()).slice(0,25);
-  const grid = document.getElementById("grid");
+        if (i === 12) {
+          div.classList.add("free");
+          div.innerText = "❤";
+        } else {
+          div.innerText = p;
+          div.onclick = () => {
+            div.classList.toggle("marked");
+            if (marcados.includes(p)) {
+              marcados = marcados.filter(x => x !== p);
+            } else {
+              marcados.push(p);
+            }
+          };
+        }
 
-  carton.forEach((p,i) => {
-    const div = document.createElement("div");
-    div.className = "cell";
-    div.innerText = p;
+        grid.appendChild(div);
+      });
+    }
 
-    div.onclick = () => {
-      div.classList.toggle("marked");
+    function verificar() {
+      const markedSet = new Set(marcados);
+      const lines = [];
 
-      if(marcados.includes(p)){
-        marcados = marcados.filter(x=>x!==p);
-      } else {
-        marcados.push(p);
+      for (let i = 0; i < 5; i++) {
+        lines.push(carton.slice(i * 5, i * 5 + 5));
       }
-    };
 
-    grid.appendChild(div);
-  });
-}
+      for (let i = 0; i < 5; i++) {
+        lines.push([carton[i], carton[i + 5], carton[i + 10], carton[i + 15], carton[i + 20]]);
+      }
 
-function verificar() {
-  let lineas = [];
+      lines.push([carton[0], carton[6], "FREE", carton[18], carton[24]]);
+      lines.push([carton[4], carton[8], "FREE", carton[16], carton[20]]);
 
-  // filas
-  for(let i=0;i<5;i++){
-    lineas.push(carton.slice(i*5,i*5+5));
-  }
+      const gano = lines.some(line => line.every(item => markedSet.has(item)));
 
-  // columnas
-  for(let i=0;i<5;i++){
-    lineas.push([carton[i],carton[i+5],carton[i+10],carton[i+15],carton[i+20]]);
-  }
+      if (gano) {
+        alert("🎉 ¡BINGO! 🎉");
+      } else {
+        alert("Aún no tienes bingo 😅");
+      }
+    }
 
-  // diagonales
-  lineas.push([carton[0],carton[6],carton[12],carton[18],carton[24]]);
-  lineas.push([carton[4],carton[8],carton[12],carton[16],carton[20]]);
-
-  let gano = lineas.some(l => l.every(x => marcados.includes(x)));
-
-  if(gano){
-    alert("🎉 ¡BINGO! 🎉");
-  } else {
-    alert("Aún no tienes bingo 😅");
-  }
-}
-
-generar();
-</script>
-
+    generar();
+  </script>
 </body>
 </html>
