@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bingo Baby Shower</title>
+  <style>
+    body { text-align:center; font-family:Arial; background:#fff0f5; }
+    h1 { font-size:40px; }
+    #palabra {
+      font-size:60px;
+      color:#ff4081;
+      margin-top:40px;
+    }
+    button {
+      padding:20px;
+      font-size:20px;
+      margin-top:30px;
+      background:#ff4081;
+      color:white;
+      border:none;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎉 Bingo Baby Shower 👶</h1>
+
+<div id="palabra">---</div>
+
+<button onclick="sacar()">Sacar palabra</button>
+
+<script>
+const palabras = [
+"Pañal","Biberón","Chupete","Coche","Cuna","Mamadera",
+"Babero","Toallitas","Juguete","Pijama","Sonajero",
+"Manta","Leche","Dormir","Llanto","Paseo",
+"Gatear","Carriola","Termómetro","Bañera",
+"Crema","Talco","Ropita","Calcetines","Cambiar"
+];
+
+let usadas = [];
+
+function sacar() {
+  if(usadas.length === palabras.length) {
+    alert("Se acabaron las palabras");
+    return;
+  }
+
+  let disponibles = palabras.filter(p => !usadas.includes(p));
+  let p = disponibles[Math.floor(Math.random()*disponibles.length)];
+
+  usadas.push(p);
+  document.getElementById("palabra").innerText = p;
+}
+</script>
+
+</body>
+</html>
