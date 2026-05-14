@@ -2,34 +2,102 @@
 <html>
 <head>
   <title>Bingo Baby Shower</title>
+
   <style>
-    body { text-align:center; font-family:Arial; background:#fff0f5; }
-    h1 { font-size:40px; }
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: #fff0f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
     #palabra {
-      font-size:60px;
-      color:#ff4081;
-      margin-top:40px;
+      font-size: 70px;
+      color: #ff4081;
+      margin: 30px 0;
+      font-weight: bold;
     }
+
     button {
-      padding:20px;
-      font-size:20px;
-      margin-top:30px;
-      background:#ff4081;
-      color:white;
-      border:none;
-      cursor:pointer;
+      padding: 20px;
+      font-size: 20px;
+      background: #ff4081;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 10px;
     }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      align-items: center;
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .qr-box {
+      background: white;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    .qr-box img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .qr-text {
+      font-size: 16px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .contador {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+    }
+
   </style>
 </head>
+
 <body>
 
 <h1>🎉 Bingo Baby Shower 👶</h1>
 
-<div id="palabra">---</div>
+<div class="container">
 
-<button onclick="sacar()">Sacar palabra</button>
+  <!-- ZONA PRINCIPAL -->
+  <div>
+    <div id="palabra">---</div>
+    <button onclick="sacar()">Sacar palabra</button>
+
+    <div class="contador">
+      Palabras usadas: <span id="contador">0</span>
+    </div>
+  </div>
+
+  <!-- QR -->
+  <div class="qr-box">
+    <img src="QR_Carton_babyshower.png" alt="QR Bingo">
+    <div class="qr-text">📱 Escanea para jugar</div>
+  </div>
+
+</div>
 
 <script>
+
+// ✅ LISTA GRANDE (evita que todos ganen)
 const palabras = [
 "Pañal","Biberón","Chupete","Coche","Cuna","Mamadera",
 "Babero","Toallitas","Juguete","Pijama","Sonajero",
@@ -43,23 +111,31 @@ const palabras = [
 "Chiquito","Familia","Cuidado","Nama","Bebé",
 "Ternura","Alegría","Duermes","Llora","Arrullos",
 "Papilla","Comida","Agüita","Jabón","Baño",
-"Sueño","Descanso","Balancín","Luces","Música"];
+"Sueño","Descanso","Balancín","Luces","Música"
+];
 
+// ✅ CONTROL DE PALABRAS USADAS
 let usadas = [];
 
+// 🎯 FUNCIÓN PRINCIPAL
 function sacar() {
-  if(usadas.length === palabras.length) {
-    alert("Se acabaron las palabras");
+
+  if (usadas.length === palabras.length) {
+    alert("✅ Ya se usaron todas las palabras");
     return;
   }
 
-  let disponibles = palabras.filter(p => !usadas.includes(p));
-  let p = disponibles[Math.floor(Math.random()*disponibles.length)];
+  const disponibles = palabras.filter(p => !usadas.includes(p));
+  const palabra = disponibles[Math.floor(Math.random() * disponibles.length)];
 
-  usadas.push(p);
-  document.getElementById("palabra").innerText = p;
+  usadas.push(palabra);
+
+  document.getElementById("palabra").innerText = palabra;
+  document.getElementById("contador").innerText = usadas.length;
 }
+
 </script>
 
 </body>
 </html>
+``
