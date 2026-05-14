@@ -5,137 +5,285 @@
 
   <style>
     body {
-      text-align: center;
-      font-family: Arial;
-      background: #fff0f5;
       margin: 0;
-      padding: 20px;
+      min-height: 100vh;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: radial-gradient(circle at top left, #ffddf1 0%, #ffe7ee 24%, #fff6f9 100%);
+      color: #4a2b48;
+      display: flex;
+      justify-content: center;
+      padding: 30px 20px 40px;
     }
 
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
+    .page {
+      width: min(1100px, 100%);
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      letter-spacing: -0.05em;
+      color: #db1d76;
+    }
+
+    .hero p {
+      margin: 14px auto 0;
+      color: #7f4f71;
+      max-width: 760px;
+      font-size: 1.05rem;
+    }
+
+    .deck {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1.25fr 0.9fr;
+      align-items: start;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 32px;
+      box-shadow: 0 25px 55px rgba(128, 36, 89, 0.14);
+      padding: 34px;
+      border: 1px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+    }
+
+    .card h2 {
+      margin: 0 0 22px;
+      font-size: 1.6rem;
+      color: #d2317a;
+    }
+
+    .word-box {
+      display: grid;
+      place-items: center;
+      padding: 34px 20px;
+      border: 2px dashed #ffbfdb;
+      border-radius: 22px;
+      background: #fff5fb;
+      min-height: 180px;
     }
 
     #palabra {
-      font-size: 70px;
-      color: #ff4081;
-      margin: 30px 0;
-      font-weight: bold;
+      margin: 0;
+      font-size: clamp(3rem, 5vw, 5rem);
+      color: #d23c7d;
+      letter-spacing: 0.04em;
+      font-weight: 800;
     }
 
-    button {
-      padding: 20px;
-      font-size: 20px;
-      background: #ff4081;
-      color: white;
-      border: none;
-      margin-top: 20px;
-      cursor: pointer;
-      border-radius: 10px;
-    }
-
-    .container {
-      display: grid;
-      grid-template-columns: 1fr 320px;
+    .action {
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
+      gap: 18px;
+      margin-top: 24px;
     }
 
-    .qr-box {
-      background: white;
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    .action button {
+      width: min(280px, 100%);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      padding: 16px 22px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #ff3d83 0%, #ff7eb7 100%);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 18px 30px rgba(255, 101, 166, 0.28);
     }
 
-    .qr-box img {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .qr-text {
-      font-size: 16px;
-      margin-top: 10px;
-      font-weight: bold;
+    .action button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 30px rgba(255, 101, 166, 0.32);
     }
 
     .contador {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #555;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #7f466f;
+      font-size: 1rem;
+      margin-top: 6px;
     }
 
+    .contador span {
+      font-weight: 700;
+      color: #d23c7d;
+    }
+
+    .qr-card {
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 28px;
+      box-shadow: 0 20px 45px rgba(190, 110, 145, 0.16);
+      border: 1px solid rgba(255,255,255,0.85);
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+    }
+
+    .qr-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      background: #ffe1f0;
+      border-radius: 999px;
+      color: #c20f61;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .qr-box img {
+      width: min(260px, 100%);
+      border-radius: 22px;
+      border: 8px solid #fff;
+      background: #fce7f3;
+    }
+
+    .qr-text {
+      color: #7a516c;
+      text-align: center;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      max-width: 260px;
+    }
+
+    .footer {
+      margin-top: 36px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,245,252,0.95) 100%);
+      border: 1px dashed rgba(210, 85, 135, 0.28);
+      padding: 20px 24px;
+      border-radius: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .footer img {
+      width: 96px;
+      border-radius: 22px;
+      box-shadow: 0 18px 40px rgba(255, 167, 205, 0.25);
+    }
+
+    .footer-content {
+      text-align: left;
+      max-width: 620px;
+    }
+
+    .footer-content h3 {
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      color: #de1d74;
+    }
+
+    .footer-content p {
+      margin: 0;
+      color: #7f4f71;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 860px) {
+      .deck {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .card,
+      .qr-card {
+        padding: 24px;
+      }
+
+      .footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <div class="page">
+    <section class="hero">
+      <h1>🎉 Bingo Baby Shower</h1>
+      <p>¡Juega, diviértete y celebra este momento tan especial con un bingo lleno de ternura y sorpresas!</p>
+    </section>
 
-<h1>🎉 Bingo Baby Shower 👶</h1>
+    <div class="deck">
+      <article class="card">
+        <h2>¡Saca una palabra!</h2>
+        <div class="word-box">
+          <div id="palabra">---</div>
+        </div>
 
-<div class="container">
+        <div class="action">
+          <button onclick="sacar()">Sacar palabra</button>
+          <div class="contador">Palabras usadas: <span id="contador">0</span></div>
+        </div>
+      </article>
 
-  <!-- ZONA PRINCIPAL -->
-  <div>
-    <div id="palabra">---</div>
-    <button onclick="sacar()">Sacar palabra</button>
-
-    <div class="contador">
-      Palabras usadas: <span id="contador">0</span>
+      <aside class="qr-card">
+        <div class="qr-label">¡Escanea para jugar!</div>
+        <div class="qr-box">
+          <img src="QR_Carton_babyshower.png" alt="QR Bingo">
+        </div>
+        <div class="qr-text">Escanea este código con tu celular para unirte al juego y compartir la emoción.</div>
+      </aside>
     </div>
+
+    <section class="footer">
+      <img src="https://i.imgur.com/HK8jLly.png" alt="Osito de peluche">
+      <div class="footer-content">
+        <h3>Felicitaciones Andrea</h3>
+        <p>¡Gracias por ser parte de este día tan especial! Que la alegría de este momento quede para siempre en el corazón.</p>
+      </div>
+    </section>
   </div>
 
-  <!-- QR -->
-  <div class="qr-box">
-    <img src="QR_Carton_babyshower.png" alt="QR Bingo">
-    <div class="qr-text">📱 Escanea para jugar</div>
-  </div>
+  <script>
+    const palabras = [
+      "Pañal","Biberón","Chupete","Coche","Cuna","Mamadera",
+      "Babero","Toallitas","Juguete","Pijama","Sonajero",
+      "Manta","Leche","Dormir","Llanto","Paseo",
+      "Gatear","Carriola","Termómetro","Bañera",
+      "Crema","Talco","Ropita","Calcetines","Cambiar",
+      "Gateo","Sonrisa","Cuento","Peluche","Móvil","Mecer",
+      "Arrullo","Frazada","Tetero","Cochecito","Guardería",
+      "Primeros pasos","Dientes","Risa","Abrazos","Cariño",
+      "Chiquito","Familia","Cuidado","Nama","Bebé",
+      "Ternura","Alegría","Duermes","Llora","Arrullos",
+      "Papilla","Comida","Agüita","Jabón","Baño",
+      "Sueño","Descanso","Balancín","Luces","Música"
+    ];
 
-</div>
+    let usadas = [];
 
-<script>
-
-// ✅ LISTA GRANDE (evita que todos ganen)
-const palabras = [
-"Pañal","Biberón","Chupete","Coche","Cuna","Mamadera",
-"Babero","Toallitas","Juguete","Pijama","Sonajero",
-"Manta","Leche","Dormir","Llanto","Paseo",
-"Gatear","Carriola","Termómetro","Bañera",
-"Crema","Talco","Ropita","Calcetines","Cambiar",
-
-"Gateo","Sonrisa","Cuento","Peluche","Móvil","Mecer",
-"Arrullo","Frazada","Tetero","Cochecito","Guardería",
-"Primeros pasos","Dientes","Risa","Abrazos","Cariño",
-"Chiquito","Familia","Cuidado","Nama","Bebé",
-"Ternura","Alegría","Duermes","Llora","Arrullos",
-"Papilla","Comida","Agüita","Jabón","Baño",
-"Sueño","Descanso","Balancín","Luces","Música"
-];
-
-// ✅ CONTROL DE PALABRAS USADAS
-let usadas = [];
-
-// 🎯 FUNCIÓN PRINCIPAL
-function sacar() {
-
-  if (usadas.length === palabras.length) {
-    alert("✅ Ya se usaron todas las palabras");
-    return;
-  }
-
-  const disponibles = palabras.filter(p => !usadas.includes(p));
-  const palabra = disponibles[Math.floor(Math.random() * disponibles.length)];
-
-  usadas.push(palabra);
-
-  document.getElementById("palabra").innerText = palabra;
-  document.getElementById("contador").innerText = usadas.length;
-}
-
-</script>
-
+    function sacar() {
+      if (usadas.length === palabras.length) {
+        alert("✅ Ya se usaron todas las palabras");
+        return;
+      }
+      const disponibles = palabras.filter(p => !usadas.includes(p));
+      const palabra = disponibles[Math.floor(Math.random() * disponibles.length)];
+      usadas.push(palabra);
+      document.getElementById("palabra").innerText = palabra;
+      document.getElementById("contador").innerText = usadas.length;
+    }
+  </script>
 </body>
 </html>
 ``
