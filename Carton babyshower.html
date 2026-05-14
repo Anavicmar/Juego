@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jugador Bingo</title>
+  <style>
+    body { text-align:center; font-family:Arial; }
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(5,80px);
+      gap:5px;
+      justify-content:center;
+    }
+    .cell {
+      border:1px solid #ccc;
+      padding:10px;
+      cursor:pointer;
+    }
+    .marked { background:pink; }
+    button {
+      margin-top:20px;
+      padding:10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>👶 Tu cartón</h2>
+<div class="grid" id="grid"></div>
+
+<button onclick="verificar()">Cantar BINGO</button>
+
+<script>
+const palabras = [
+"Pañal","Biberón","Chupete","Coche","Cuna","Mamadera",
+"Babero","Toallitas","Juguete","Pijama","Sonajero",
+"Manta","Leche","Dormir","Llanto","Paseo",
+"Gatear","Carriola","Termómetro","Bañera",
+"Crema","Talco","Ropita","Calcetines","Cambiar"
+];
+
+let carton = [];
+let marcados = [];
+
+function generar() {
+  carton = [...palabras].sort(()=>0.5-Math.random()).slice(0,25);
+  const grid = document.getElementById("grid");
+
+  carton.forEach((p,i) => {
+    const div = document.createElement("div");
+    div.className = "cell";
+    div.innerText = p;
+
+    div.onclick = () => {
+      div.classList.toggle("marked");
+
+      if(marcados.includes(p)){
+        marcados = marcados.filter(x=>x!==p);
+      } else {
+        marcados.push(p);
+      }
+    };
+
+    grid.appendChild(div);
+  });
+}
+
+function verificar() {
+  let lineas = [];
+
+  // filas
+  for(let i=0;i<5;i++){
+    lineas.push(carton.slice(i*5,i*5+5));
+  }
+
+  // columnas
+  for(let i=0;i<5;i++){
+    lineas.push([carton[i],carton[i+5],carton[i+10],carton[i+15],carton[i+20]]);
+  }
+
+  // diagonales
+  lineas.push([carton[0],carton[6],carton[12],carton[18],carton[24]]);
+  lineas.push([carton[4],carton[8],carton[12],carton[16],carton[20]]);
+
+  let gano = lineas.some(l => l.every(x => marcados.includes(x)));
+
+  if(gano){
+    alert("🎉 ¡BINGO! 🎉");
+  } else {
+    alert("Aún no tienes bingo 😅");
+  }
+}
+
+generar();
+</script>
+
+</body>
+</html>
